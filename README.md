@@ -20,6 +20,8 @@ images. This allows us to repurpose powerful vision models pretrained on ImageNe
 classification tasks — a form of cross-domain transfer learning.
 
 ## Repository Structure
+
+```
 Speech-Emotion-Recognition-Transfer-Learning/
 │
 ├── data/ # Datasets (not tracked by git)
@@ -41,7 +43,7 @@ Speech-Emotion-Recognition-Transfer-Learning/
 ├── requirements.txt
 ├── .gitignore
 └── README.md
-
+```
 
 ## Datasets
 
