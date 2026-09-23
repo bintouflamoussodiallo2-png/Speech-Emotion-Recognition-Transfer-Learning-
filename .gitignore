@@ -1,0 +1,6 @@
+data/
+__pycache__/
+*.pth
+*.egg-info/
+.env
+*.log
