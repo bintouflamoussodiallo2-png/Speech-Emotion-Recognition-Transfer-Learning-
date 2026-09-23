@@ -68,6 +68,7 @@ All models are pretrained on ImageNet. Only the final classification head is tra
 | ResNet-50 | 25M | 76.1% |
 
 ## Experimental Pipeline
+```
 Audio (.wav)
 │
 ▼
@@ -84,6 +85,7 @@ Custom classification head
 │
 ▼
 Emotion label
+```
 
 
 ## Installation
