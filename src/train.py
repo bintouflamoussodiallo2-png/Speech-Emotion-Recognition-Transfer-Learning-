@@ -129,7 +129,7 @@ def experiments(args):
     # Test validation   
     print(f"\nLoading best model from {best_model_path}")
     model.load_state_dict(torch.load(best_model_path))
-    test_acc = evaluate(mod, test_loader, device)
+    test_acc = evaluate(model, test_loader, device)
     print(f"Test accuracy: {test_acc:.4f}")
 
     # print the per-class report 

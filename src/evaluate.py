@@ -28,8 +28,8 @@ def get_predictions(model, loader, device):
             outputs = model(inputs)
             # .cpu().numpy() cuz need to convert to pythorch tensor to a numpy array
             # while scikit-learn only knows numpy arrays, and numpy only knows cpu and not gpu (device)
-            list_pred.extend(outputs.argmax(1).cpu().np())
-            list_labels.extend(labels.np())
+            list_pred.extend(outputs.argmax(1).cpu().numpy())
+            list_labels.extend(labels.numpy())
 
     return list_pred, list_labels
 
