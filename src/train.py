@@ -94,6 +94,8 @@ def experiments(args):
         model.train()
         total, correct, loss_t = 0, 0, 0
 
+        # train for each epoch 
+        # tqdm for better train involving 
         for inputs, labels in tqdm(train_loader, desc=f"Epoch {epoch + 1}/{args.epochs}"):
             inputs, labels = inputs.to(device), labels.to(device)
 
@@ -107,7 +109,7 @@ def experiments(args):
             correct += (outputs.argmax(1) == labels).sum().item()
 
         train_acc = correct/total
-        val_acc = evaluate(model, val_loader, device)
+        val_acc = evaluate(model, val_loader, device) # validation accuration on val_set
         train_accs.append(train_acc)
         val_accs.append(val_acc)
 
@@ -120,5 +122,21 @@ def experiments(args):
             best_val_acc = val_acc
             torch.save(model.state_dict(), best_model_path)
             print(f"Best model saved at {best_model_path} (val_acc={best_val_acc:.4f})")
+
+    
+    # Test validation   
+    print(f"\nLoading best model from {best_model_path}")
+    model.load_state_dict(torch.load(best_model_path))
+    test_acc = evaluate(mod, test_loader, device)
+    print(f"Test accuracy: {test_acc:.4f}")
+
+    # print the per-class report 
+    print_classification_report(model, test_loader, device, emotions)
+
+    #save the confusion matrix 
+    save_confusion_matrix(model, test_loader, device, emotions, f"results/{args.model}_{args.dataset}_confusion.png")
+
+    # save training curves 
+    save_training_curves(train_accs, val_accs, f"results/{args.model}_{args.dataset}_curves.png")
 
     
