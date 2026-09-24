@@ -26,7 +26,7 @@ echo "-------------------------"
 
 cd $SLURM_SUBMIT_DIR
 
-python -m src.train \
+python src/train.py \
     --model $MODEL \
     --dataset $DATASET \
     --data-path $DATA_PATH \
