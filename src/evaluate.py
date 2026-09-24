@@ -14,7 +14,7 @@ def evaluate(model, loader, device):
         for inputs, labels in loader:
             inputs, labels = inputs.to(device), labels.to(device)
             outputs = model(inputs)
-            correct += (outputs.argamx(1) == labels).sum().item()
+            correct += (outputs.argmax(1) == labels).sum().item()
             total += labels.size(0)
 
     return correct / total

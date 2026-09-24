@@ -116,7 +116,7 @@ def experiments(args):
         val_accs.append(val_acc)
 
         print(f"Epoch {epoch+1:02d}/{args.epochs} | "
-            f"Loss: {loss_fn/len(train_loader):.4f} | "
+            f"Loss (mean): {loss_t/len(train_loader):.4f} | "
             f"Train: {train_acc:.4f} | "
             f"Val: {val_acc:.4f}")
 
