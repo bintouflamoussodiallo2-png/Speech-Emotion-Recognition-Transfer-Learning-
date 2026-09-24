@@ -1,8 +1,8 @@
 #!/bin/bash 
 #SBATCH --job-name=SER_train 
 ##SBATCH --account=def-smoolak
-#SBATCH --gres=gpu:H100:1 
-#SBATCH --cpu-per-task=16 
+#SBATCH --gres=gpu:h100:1 
+#SBATCH --cpus-per-task=16 
 #SBATCH --mem=32G
 #SBATCH --mail-user=ebd4258@umoncton.ca
 #SBATCH --mail-type=END,FAIL
