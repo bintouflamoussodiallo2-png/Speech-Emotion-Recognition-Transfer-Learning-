@@ -108,6 +108,7 @@ def experiments(args):
 
             loss_t += loss_fn.item()
             correct += (outputs.argmax(1) == labels).sum().item()
+            total += labels.size(0)
 
         train_acc = correct/total
         val_acc = evaluate(model, val_loader, device) # validation accuration on val_set
