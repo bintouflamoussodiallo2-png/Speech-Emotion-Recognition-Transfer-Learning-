@@ -28,20 +28,20 @@ def split_dataset(dataset, train_ratio=0.7, val_ratio=0.15):
     test_size = len(dataset) - train_size - val_size
     return random_split(dataset, [train_size, val_size, test_size])
 
-# def save_training_curves(train_accs, val_accs, save_path):
-#     epochs = range(1, len(train_accs) + 1)
-#     plt.figure(figsize=(8, 5))
-#     plt.plot(epochs, train_accs, label='Train accuracy', marker='o')
-#     plt.plot(epochs, val_accs, label='Val accuracy', marker='s')
-#     plt.xlabel('Epoch')
-#     plt.ylabel('Accuracy')
-#     plt.title('Traning vs Validation Accuracy')
-#     plt.legend()
-#     plt.grid(True)
-#     plt.tight_layout()
-#     plt.savefig(save_path, dpi=150)
-#     plt.close()
-#     print(f"Traning curves saved at: {save_path}")
+def save_training_curves(train_accs, val_accs, save_path):
+    epochs = range(1, len(train_accs) + 1)
+    plt.figure(figsize=(8, 5))
+    plt.plot(epochs, train_accs, label='Train accuracy', marker='o')
+    plt.plot(epochs, val_accs, label='Val accuracy', marker='s')
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.title('Traning vs Validation Accuracy')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig(save_path, dpi=150)
+    plt.close()
+    print(f"Traning curves saved at: {save_path}")
 
 # def train(args):
 #     set_seed(42)
