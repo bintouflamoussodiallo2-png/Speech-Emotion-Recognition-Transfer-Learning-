@@ -119,6 +119,6 @@ def experiments(args):
         if val_acc > best_val_acc:
             best_val_acc = val_acc
             torch.save(model.state_dict(), best_model_path)
-            print(f"Best model saved (val_acc={best_val_acc:.4f})")
+            print(f"Best model saved at {best_model_path} (val_acc={best_val_acc:.4f})")
 
     
