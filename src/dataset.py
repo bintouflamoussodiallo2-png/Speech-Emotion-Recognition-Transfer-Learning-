@@ -4,7 +4,7 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset
 
-TESS_EMOTIONS = ["angry", "disgust", "fear", "happiness", "pleasant_surprise", "sadness", "neutral"]
+TESS_EMOTIONS = ["angry", "disgust", "fear", "happy", "pleasant_surprise", "sad", "neutral"]
 RAVDESS_EMOTIONS = ["neutral", "calm", "happiness", "sadness", "angry", "fearful", "diisgust", "surprised"]
 
 def load_mel_spectrogram(file_path, sr=16000, n_mels=128, max_length=128):
@@ -78,7 +78,7 @@ class RAVDESSDataset(Dataset):
             actor_path = os.path.join(data_path, actor_folder)
             if not os.path.isdir(actor_path):
                 continue
-            for fname in os.listdir(data_path):
+            for fname in os.listdir(actor_folder):
                 if not fname.endswith(".wav"):
                     continue
                 parts = fname.split("-")

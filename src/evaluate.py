@@ -23,13 +23,15 @@ def get_predictions(model, loader, device):
     model.eval()
     list_pred, list_labels = [], []
     with torch.no_grad():
-        for inputs,labels in loader:
+        for inputs, labels in loader:
             inputs = inputs.to(device)
             outputs = model(inputs)
             # .cpu().numpy() cuz need to convert to pythorch tensor to a numpy array
             # while scikit-learn only knows numpy arrays, and numpy only knows cpu and not gpu (device)
             list_pred.extend(outputs.argmax(1).cpu().numpy())
             list_labels.extend(labels.numpy())
+        #list_pred = torch.cat(list_pred)
+        #list_labels = torch.cat(list_labels)
 
     return list_pred, list_labels
 
@@ -52,8 +54,8 @@ def print_classification_report(model, loader, device, class_names):
     Useful to detect which emotions are hardest to classify.
     """
 
-    predictions, labels = get_predictions(model, loader, device)
-    report = classification_report(labels, predictions, target_names=class_names)
+    l_predictions, l_labels = get_predictions(model, loader, device)
+    report = classification_report(y_true=l_labels, y_pred=l_predictions, target_names=class_names)
     print("\nClassification Report:")
     print(report)
-    return report
+    #return report
