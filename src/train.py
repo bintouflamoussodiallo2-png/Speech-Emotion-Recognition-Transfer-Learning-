@@ -179,7 +179,7 @@ if __name__ == "__main__":
         help="Training epcohs number"
     )
     parser.add_argument(
-        "--batch_size", type=int, default=64, 
+        "--batch-size", type=int, default=64, 
         help="Batch size"
     )
     parser.add_argument(
