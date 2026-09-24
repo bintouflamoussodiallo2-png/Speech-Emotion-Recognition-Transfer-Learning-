@@ -20,13 +20,13 @@ def get_dataset(args):
     else:
         raise ValueError(f"Unknown dataset: {args.dataset}")
 
-# def split_dataset(dataset, train_ratio=0.7, val_ratio=0.15):
-#     # Split dataset into train/val/test
+def split_dataset(dataset, train_ratio=0.7, val_ratio=0.15):
+    # Split dataset into train/val/test
 
-#     train_size = int(train_ratio * len(dataset))
-#     val_size = int(val_ratio * len(dataset))
-#     test_size = len(dataset) - train_size - val_size
-#     return random_split(dataset, [train_size, val_size, test_size])
+    train_size = int(train_ratio * len(dataset))
+    val_size = int(val_ratio * len(dataset))
+    test_size = len(dataset) - train_size - val_size
+    return random_split(dataset, [train_size, val_size, test_size])
 
 # def save_training_curves(train_accs, val_accs, save_path):
 #     epochs = range(1, len(train_accs) + 1)
