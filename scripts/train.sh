@@ -1,6 +1,6 @@
 #!/bin/bash 
 #SBATCH --job-name=SER_train 
-#SBATCH --account=ebd4258 
+##SBATCH --account=def-smoolak
 #SBATCH --gres=gpu:H100:1 
 #SBATCH --cpu-per-task=16 
 #SBATCH --mem=32G
