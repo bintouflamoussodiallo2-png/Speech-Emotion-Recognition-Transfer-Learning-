@@ -43,82 +43,82 @@ def save_training_curves(train_accs, val_accs, save_path):
     plt.close()
     print(f"Traning curves saved at: {save_path}")
 
-# def train(args):
-#     set_seed(42)
-#     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-#     print(f"\nDevice: {device}")
-#     print(f"Model: {args.model}\n")
-#     print(f"Dataset: {args.dataset}\n")
+def experiments(args):
+    set_seed(42)
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print(f"\nDevice: {device}")
+    print(f"Model: {args.model}\n")
+    print(f"Dataset: {args.dataset}\n")
 
-#     dataset, emotions = get_dataset(args)
-#     num_classes = len(emotions)
-#     print(f"Samples: {len(dataset)}")
-#     print(f"Classes: {num_classes} -> {emotions}\n")
+    dataset, emotions = get_dataset(args)
+    num_classes = len(emotions)
+    print(f"Samples: {len(dataset)}")
+    print(f"Classes: {num_classes} -> {emotions}\n")
 
-#     train_set, val_set, test_set = split_dataset(dataset)
-#     train_loader = DataLoader(
-#         train_set,
-#         batch_size=args.batch_size, 
-#         shuffle=True,
-#         num_workers=16, 
-#         pin_memory=True
-#     )
+    train_set, val_set, test_set = split_dataset(dataset)
+    train_loader = DataLoader(
+        train_set,
+        batch_size=args.batch_size, 
+        shuffle=True,
+        num_workers=16, 
+        pin_memory=True
+    )
 
-#     val_loader = DataLoader(
-#         val_set,
-#         batch_size=args.batch_size, 
-#         num_workers=16, 
-#         pin_memory=True
-#     )
+    val_loader = DataLoader(
+        val_set,
+        batch_size=args.batch_size, 
+        num_workers=16, 
+        pin_memory=True
+    )
 
-#     test_loader = DataLoader(
-#         test_set,
-#         batch_size=args.batch_size, 
-#         num_workers=16, 
-#         pin_memory=True
-#     )
+    test_loader = DataLoader(
+        test_set,
+        batch_size=args.batch_size, 
+        num_workers=16, 
+        pin_memory=True
+    )
 
-#     model = get_model(args.model, num_classes, freeze_backbone=True).to(device)
-#     criterion = nn.CrossEntropyLoss()
-#     optimizer = torch.optim.Adam(
-#         filter(lambda p: p.requires_grad, model.parameters()),
-#         lr=args.lr
-#     )
+    model = get_model(args.model, num_classes, freeze_backbone=True).to(device)
+    criterion = nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(
+        filter(lambda p: p.requires_grad, model.parameters()),
+        lr=args.lr
+    )
 
-#     os.makedirs('results', exist_ok=True)
-#     best_val_acc = 0.0
-#     train_accs, val_accs = [], []
-#     best_model_path = f"results/{args.model}_{args.dataset}_best.pth"
+    os.makedirs('results', exist_ok=True)
+    best_val_acc = 0.0
+    train_accs, val_accs = [], []
+    best_model_path = f"results/{args.model}_{args.dataset}_best.pth"
 
-#     for epoch in range(args.epochs):
-#         model.train()
-#         total, correct, loss_t = 0, 0, 0
+    for epoch in range(args.epochs):
+        model.train()
+        total, correct, loss_t = 0, 0, 0
 
-#         for inputs, labels in tqdm(train_loader, desc=f"Epoch {epoch + 1}/{args.epochs}"):
-#             inputs, labels = inputs.to(device), labels.to(device)
+        for inputs, labels in tqdm(train_loader, desc=f"Epoch {epoch + 1}/{args.epochs}"):
+            inputs, labels = inputs.to(device), labels.to(device)
 
-#             optimizer.zero_grad()
-#             outputs = model(inputs)
-#             loss_fn = criterion(outputs, labels)
-#             loss_fn.backward()
-#             optimizer.step()
+            optimizer.zero_grad()
+            outputs = model(inputs)
+            loss_fn = criterion(outputs, labels)
+            loss_fn.backward()
+            optimizer.step()
 
-#             loss_t += loss_fn.item()
-#             correct += (outputs.argmax(1) == labels).sum().item()
+            loss_t += loss_fn.item()
+            correct += (outputs.argmax(1) == labels).sum().item()
 
-#         train_acc = correct/total
-#         val_acc = evaluate(model, val_loader, device)
-#         train_accs.append(train_acc)
-#         val_accs.append(val_acc)
+        train_acc = correct/total
+        val_acc = evaluate(model, val_loader, device)
+        train_accs.append(train_acc)
+        val_accs.append(val_acc)
 
-#         print(f"Epoch {epoch+1:02d}/{args.epochs} | "
-#             f"Loss: {loss_fn/len(train_loader):.4f} | "
-#             f"Train: {train_acc:.4f} | "
-#             f"Val: {val_acc:.4f}")
+        print(f"Epoch {epoch+1:02d}/{args.epochs} | "
+            f"Loss: {loss_fn/len(train_loader):.4f} | "
+            f"Train: {train_acc:.4f} | "
+            f"Val: {val_acc:.4f}")
 
-#         if val_acc > best_val_acc:
-#             best_val_acc = val_acc
-#             torch.save(model.state_dict(), best_model_path)
-#             print(f"Best model saved (val_acc={best_val_acc:.4f})")
+        if val_acc > best_val_acc:
+            best_val_acc = val_acc
+            torch.save(model.state_dict(), best_model_path)
+            print(f"Best model saved (val_acc={best_val_acc:.4f})")
 
     
