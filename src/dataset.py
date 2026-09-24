@@ -74,18 +74,22 @@ class RAVDESSDataset(Dataset):
         self.labels = []
         self.emotions2idx = {e: i for i, e in enumerate(RAVDESS_EMOTIONS)} # for simple indexing
 
-        for fname in os.listdir(data_path):
-            if not fname.endswith(".wav"):
+        for actor_folder in sorted(os.listdir(data_path)): 
+            actor_path = os.path.join(data_path, actor_folder)
+            if not os.path.isdir(actor_path):
                 continue
-            parts = fname.split("-")
-            if len(parts) < 3: # because emotions are at the 3rd segment
-                continue
+            for fname in os.listdir(data_path):
+                if not fname.endswith(".wav"):
+                    continue
+                parts = fname.split("-")
+                if len(parts) < 3: # because emotions are at the 3rd segment
+                    continue
 
-            emotion_id = int(parts[2]) - 1 # RAVDESS uses 1-indexed so we need to reindex with 0-indexed
+                emotion_id = int(parts[2]) - 1 # RAVDESS uses 1-indexed so we need to reindex with 0-indexed
 
-            if 0 <= emotion_id < len(RAVDESS_EMOTIONS):
-                self.samples.append(os.path.join(data_path, fname))
-                self.labels.append(emotion_id)
+                if 0 <= emotion_id < len(RAVDESS_EMOTIONS):
+                    self.samples.append(os.path.join(data_path, fname))
+                    self.labels.append(emotion_id)
 
     def __len__(self):
         return len(self.samples)
