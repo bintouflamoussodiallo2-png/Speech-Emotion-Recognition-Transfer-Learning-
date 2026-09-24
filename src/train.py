@@ -1,5 +1,6 @@
 import argparse
 import torch 
+import json
 import torch.nn as nn
 import matplotlib.pyplot as plt 
 from torch.utils.data import DataLoader, random_split
@@ -139,4 +140,52 @@ def experiments(args):
     # save training curves 
     save_training_curves(train_accs, val_accs, f"results/{args.model}_{args.dataset}_curves.png")
 
-    
+    # save history in a .json
+    history = {
+        'model': args.model,
+        'dataset': args.dataset, 
+        'epochs': args.epochs, 
+        'lr': args.lr, 
+        'batch_size': args.batch_size, 
+        'train_acc': train_accs, 
+        'val_acc': val_accs,  
+        'test_acc': test_acc, 
+    }
+
+    history_path = f"results/{args.model}_{args.dataset}_history.json"
+    with open(history_path, 'w', encoding='utf-8') as f:
+        json.dump(history, f, indent=4)
+
+    print(f"History saved at {history_path}")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Speech Emotion Recognition - Transfer Learning')
+    parser.add_argument(
+        "--model", type=str, default="vgg16", 
+        choices=["vgg16", "resnet18", "resnet34", "resnet50"], 
+        help="Backbone architecture"
+    )
+    parser.add_argument(
+        "--dataset", type=str, default="TESS",
+        choices=["TESS", "RAVDESS"],
+        help="Dataset to use"
+    )
+    parser.add_argument(
+        "--data-path", type=str, required=True, 
+        help="Path to dataset root folder",
+    )
+    parser.add_argument(
+        "--epochs", type=int, default=20, 
+        help="Training epcohs number"
+    )
+    parser.add_argument(
+        "--batch_size", type=int, default=64, 
+        help="Batch size"
+    )
+    parser.add_argument(
+        "--lr", type=float, default=1e-4, 
+        help="Learning rate"
+    )
+
+    args = parser.parse_args()
+    experiments(args)
