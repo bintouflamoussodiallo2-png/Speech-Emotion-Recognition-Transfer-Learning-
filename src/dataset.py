@@ -45,7 +45,7 @@ class TESSDataset(Dataset):
             if not os.path.isdir(foler_path):
                 continue
 
-            emotion = folder.split("_")[-1].lower()
+            emotion = folder.split("_")[1:].lower()
 
             if emotion not in self.emotion2idx:
                 continue
